@@ -7,8 +7,17 @@ from modules.file_handler import FileHandler
 # Initialize modules
 groq_agent = GroqAgent()
 assistant = CodeAssistant()
-code = generate_code(prompt)
 file_handler = FileHandler()
+
+st.title("Code Generator Agent")
+prompt = st.text_area("Enter your prompt")
+if st.button("Generate Code"):
+    if prompt:
+        code = generate_code(prompt)
+        st.code(code, language="python")
+    else:
+        st.warning("Please enter a prompt before generating code.")
+
 
 st.set_page_config(page_title="Groq-Powered Dev+QA Agent", layout="wide")
 
