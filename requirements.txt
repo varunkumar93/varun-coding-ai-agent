@@ -5,3 +5,4 @@ tiktoken
 markdown
 groq
 Pandas
+requests
