@@ -1,13 +1,13 @@
 import streamlit as st
 from modules.groq_agent import GroqAgent
 from modules.code_assistant import CodeAssistant
-from modules.code_generator import CodeGenerator
+from modules.code_generator import generate_code
 from modules.file_handler import FileHandler
 
 # Initialize modules
 groq_agent = GroqAgent()
 assistant = CodeAssistant()
-generator = CodeGenerator()
+code = generate_code(prompt)
 file_handler = FileHandler()
 
 st.set_page_config(page_title="Groq-Powered Dev+QA Agent", layout="wide")
