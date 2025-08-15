@@ -4,6 +4,9 @@ from modules.code_assistant import CodeAssistant
 from modules.code_generator import generate_code
 from modules.file_handler import FileHandler
 
+file_handler = FileHandler()
+summary = file_handler.summarize(uploaded_file)
+
 # Initialize modules
 groq_agent = GroqAgent()
 assistant = CodeAssistant()
