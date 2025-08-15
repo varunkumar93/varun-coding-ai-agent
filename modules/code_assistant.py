@@ -1,11 +1,13 @@
 from modules.groq_agent import GroqAgent
 
-groq_agent = GroqAgent()
+class CodeAssistant:
+    def __init__(self):
+        self.agent = GroqAgent()
 
-def explain_code(code):
-    prompt = f"Explain the following code:\n{code}"
-    return groq_agent.query(prompt)
+    def explain_code(self, code):
+        prompt = f"Explain the following code:\n{code}"
+        return self.agent.query(prompt)
 
-def debug_code(code):
-    prompt = f"Find and fix bugs in the following code:\n{code}"
-    return groq_agent.query(prompt)
+    def debug_code(self, code):
+        prompt = f"Find and fix bugs in the following code:\n{code}"
+        return self.agent.query(prompt)
