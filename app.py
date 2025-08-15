@@ -9,7 +9,7 @@ groq_agent = GroqAgent()
 assistant = CodeAssistant()
 file_handler = FileHandler()
 
-st.title("Code Generator Agent")
+st.title("Varun's Code Generator Agent")
 prompt = st.text_area("Enter your prompt")
 if st.button("Generate Code"):
     if prompt:
