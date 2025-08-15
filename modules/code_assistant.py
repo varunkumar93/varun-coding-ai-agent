@@ -1,13 +1,11 @@
-from modules.groq_agent import ask_groq
+from modules.groq_agent import GroqAgent
 
-def explain_code(code: str) -> str:
-    prompt = f"Explain this code:\n{code}"
-    return ask_groq(prompt)
+groq_agent = GroqAgent()
 
-def debug_code(code: str) -> str:
-    prompt = f"Find bugs in this code:\n{code}"
-    return ask_groq(prompt)
+def explain_code(code):
+    prompt = f"Explain the following code:\n{code}"
+    return groq_agent.query(prompt)
 
-def optimize_code(code: str) -> str:
-    prompt = f"Suggest optimizations for this code:\n{code}"
-    return ask_groq(prompt)
+def debug_code(code):
+    prompt = f"Find and fix bugs in the following code:\n{code}"
+    return groq_agent.query(prompt)
