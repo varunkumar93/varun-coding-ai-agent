@@ -21,9 +21,6 @@ if st.button("Generate Code"):
 
 st.set_page_config(page_title="Groq-Powered Dev+QA Agent", layout="wide")
 
-st.title("🧠 Groq-Powered Dev+QA Agent")
-st.markdown("Upload code, generate new scripts, debug errors, or explain logic — all in one place.")
-
 # Sidebar: Mode selection
 mode = st.sidebar.radio("Choose Mode", ["Explain Code", "Generate Code", "Debug Code", "Upload File"])
 
