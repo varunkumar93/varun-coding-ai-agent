@@ -1,5 +1,7 @@
-from modules.groq_agent import ask_groq
+from modules.groq_agent import GroqAgent
 
-def generate_code(task: str, language: str = "Python") -> str:
-    prompt = f"Write {language} code for this task:\n{task}"
-    return ask_groq(prompt)
+groq_agent = GroqAgent()
+
+def generate_code(prompt):
+    full_prompt = f"Write Python code for the following task:\n{prompt}"
+    return groq_agent.query(full_prompt)
