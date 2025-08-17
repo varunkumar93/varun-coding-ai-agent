@@ -7,7 +7,6 @@ class LearningPath:
         }
 
     def recommend(self, progress):
-        # Simple logic: recommend next uncompleted lesson
         for path, lessons in self.paths.items():
             for lesson in lessons:
                 if lesson not in progress.values():
