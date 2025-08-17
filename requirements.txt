@@ -11,4 +11,4 @@ langchain
 chromadb
 tiktoken
 sentence-transformers
-langchain-community
+langchain==0.1.16
