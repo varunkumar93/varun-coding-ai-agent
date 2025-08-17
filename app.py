@@ -90,7 +90,7 @@ if mode == "🧠 Memory Chat":
         st.write(response)
 
 # Mode: Learning Pathfrom modules.learning_path import LearningPath
-elif selected_mode == "🧠 Learning Path":
+elif mode == "🧠 Learning Path":
     from modules.learning_path import LearningPath
     from modules.course_manager import ProgramizCourseManager
     from modules.quiz_engine import QuizEngine
