@@ -89,18 +89,39 @@ if mode == "🧠 Memory Chat":
         st.markdown("#### 💬 Response")
         st.write(response)
 
-# Mode: Learning Path
-elif mode == "🧭 Learning Path":
-    st.title("🧭 Personalized Learning Path")
-    path, lesson = st.session_state.learning_path.recommend(st.session_state.progress)
-    if lesson:
-        st.markdown(f"**Path:** {path}")
-        st.markdown(f"**Next Lesson:** {lesson}")
-        content = course_manager.get_lesson_content(path, lesson)
-        st.markdown(content)
-    else:
-        st.success("🎉 All lessons completed!")
+# Mode: Learning Pathfrom modules.learning_path import LearningPath
+from modules.course_manager import ProgramizCourseManager
+from modules.quiz_engine import QuizEngine
 
+learning_path = LearningPath()
+course_manager = ProgramizCourseManager()
+quiz_engine = QuizEngine()
+
+# Initialize progress
+if "progress" not in st.session_state:
+    st.session_state.progress = set()
+
+# Recommend next lesson
+path, lesson = learning_path.recommend(st.session_state.progress)
+
+if path and lesson:
+    st.subheader(f"📘 {path} → {lesson}")
+    
+    # Fetch and display lesson content
+    content = course_manager.get_lesson_content(path, lesson)
+    st.markdown(content)
+
+    # Mark lesson as completed
+    st.session_state.progress.add((path, lesson))
+
+    # Generate and display quiz
+    quiz = quiz_engine.generate(path, lesson)
+    st.markdown("### 🧪 Quiz Time")
+    st.write(quiz)
+else:
+    st.success("🎉 You've completed all lessons!")
+if st.button("🔄 Restart Learning Path"):
+    st.session_state.progress = set()
 # Mode: Run Code
 elif mode == "🧪 Run Code":
     st.title("🧪 Code Execution Sandbox")
