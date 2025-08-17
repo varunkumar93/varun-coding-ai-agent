@@ -115,7 +115,7 @@ elif mode == "🧭 Learning Path":
         st.session_state.progress.add((path, lesson))
 
         # Generate quiz
-        quiz = quiz_engine.generate(path, lesson)
+        quiz = quiz_engine.get_quiz(f"{path} → {lesson}")
         st.markdown("### 🧪 Quiz Time")
         st.write(quiz)
     else:
