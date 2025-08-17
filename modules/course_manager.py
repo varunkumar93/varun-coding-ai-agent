@@ -3,16 +3,13 @@ from bs4 import BeautifulSoup
 
 class ProgramizCourseManager:
     def get_lesson_content(self, language, topic_slug):
-        # ✅ Static lesson for Python
         if topic_slug == "variables-data-types":
             return """### 📘 Variables and Data Types (Python)
-Variables store data. Data types define the kind of data.
 
 📘 Read: [freeCodeCamp Python Guide](https://www.freecodecamp.org/news/learn-python-free-python-courses-for-beginners/)
 📺 Watch: [Python Full Course](https://www.youtube.com/watch?v=rfscVS0vtbw)
 """
 
-        # ✅ Dynamic lesson for Java, JavaScript, and other languages
         try:
             url = f"https://www.freecodecamp.org/news/tag/{topic_slug}/"
             response = requests.get(url, timeout=5)
@@ -39,4 +36,12 @@ We couldn’t fetch a lesson for **{topic_slug}** right now.
 📺 Watch: [YouTube Tutorials](https://www.youtube.com/results?search_query=learn+{topic_slug})
 """
 
-        return None
+    def get_practice_block(self, topic_slug):
+        if topic_slug == "variables-data-types":
+            return {
+                "prompt": """### 🧪 Practice: Variables and Data Types
+
+**Task:** Create a variable `name` with your name and print it.
+
+```python
+# Your code here
