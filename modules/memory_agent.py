@@ -1,15 +1,15 @@
 import os
+import streamlit as st
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
-from langchain_community.llms import Groq
-
+from langchain_groq import ChatGroq
 class MemoryAgent:
     def __init__(self, model="llama3-8b-8192"):
         self.memory = ConversationBufferMemory()
         self.chain = ConversationChain(
-            llm=Groq(
+            llm=ChatGroq(
                 model=model,
-                api_key=os.getenv("GROQ_API_KEY")
+                api_key=st.secrets["GROQ_API_KEY"]
             ),
             memory=self.memory
         )
