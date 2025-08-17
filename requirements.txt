@@ -10,3 +10,4 @@ requests
 faiss-cpu
 chromadb
 sentence-transformers
+langchain-core==0.1.35
