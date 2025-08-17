@@ -58,7 +58,7 @@ if "file_handler" not in st.session_state:
     st.session_state.file_handler = FileHandler()
 
 # Sidebar mode selection
-st.sidebar.title("🧠 VarunAI Agent Suite")
+st.sidebar.title("🧠 Varun coding AI Agent")
 mode = st.sidebar.radio("Choose Mode", [
     "🧠 Memory Chat",
     "🧭 Learning Path",
