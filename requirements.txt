@@ -6,3 +6,5 @@ markdown
 groq
 Pandas
 requests
+faiss-cpu
+langchain
