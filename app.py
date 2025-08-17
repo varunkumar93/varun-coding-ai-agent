@@ -61,7 +61,7 @@ if "file_handler" not in st.session_state:
 st.sidebar.title(" Varun coding AI Agent")
 mode = st.sidebar.radio("Choose Mode", [
     "Memory Chat",
-    "earning Path",
+    "Learning Path",
     "Run Code",
     "Prompt Lab",
     "Quiz Engine",
