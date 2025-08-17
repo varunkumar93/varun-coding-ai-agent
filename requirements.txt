@@ -2,7 +2,7 @@ streamlit
 openai
 langchain==0.1.17
 langchain-community==0.0.32
-langchain-core==0.1.42
+langchain-core==0.1.48
 groq
 tiktoken
 markdown
