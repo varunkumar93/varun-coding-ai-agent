@@ -18,6 +18,9 @@ from modules.code_generator import generate_code
 from modules.code_assistant import CodeAssistant
 from modules.file_handler import FileHandler
 code = generate_code("Sort a list of integers")
+from modules.groq_agent import GroqAgent
+groq_agent = GroqAgent()
+st.session_state.prompt_lab = PromptLab(groq_agent)
 
 # Dummy course manager (replace with real one later)
 class DummyCourseManager:
