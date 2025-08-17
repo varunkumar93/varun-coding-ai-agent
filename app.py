@@ -7,6 +7,8 @@ from modules.groq_agent import GroqAgent
 from modules.agent_flow import AgentFlow
 from modules.prompt_lab import PromptLab
 from modules.quiz_engine import QuizEngine
+from modules.vector_search import VectorSearch
+from modules.retrieval_qa import RetrievalAgent
 
 # Page config
 st.set_page_config(page_title="VarunAI Coding Agent", layout="wide")
@@ -20,6 +22,8 @@ groq_agent = GroqAgent()
 agent_flow = AgentFlow(assistant, generate_code)
 prompt_lab = PromptLab(groq_agent)
 quiz_engine = QuizEngine()
+vector_search = VectorSearch()
+retrieval_agent = RetrievalAgent()
 
 # Session state
 if "progress" not in st.session_state:
@@ -30,7 +34,8 @@ if "quiz_score" not in st.session_state:
 # Sidebar
 mode = st.sidebar.radio("Choose Mode", [
     "📚 Course Training", "🧪 Practice Lab", "📁 Upload File",
-    "🧠 Ask AI", "🧠 Prompt Lab", "🔗 Agent Flow", "🧠 Quiz Engine"
+    "🧠 Ask AI", "🧠 Prompt Lab", "🔗 Agent Flow",
+    "🧠 Quiz Engine", "🔍 Semantic Search", "🔍 Semantic Q&A"
 ])
 st.sidebar.markdown("### 📈 Progress")
 for c, l in st.session_state.progress.items():
@@ -113,3 +118,28 @@ elif mode == "🧠 Quiz Engine":
         else:
             st.error("❌ Incorrect.")
         st.markdown(f"**Your Score for {topic}:** {st.session_state.quiz_score.get(topic, 0)}")
+
+elif mode == "🔍 Semantic Search":
+    query = st.text_input("Ask a question about any lesson or concept")
+    if st.button("Search"):
+        all_lessons = []
+        for course in course_manager.courses:
+            for lesson in course_manager.get_lessons(course):
+                all_lessons.append(course_manager.get_lesson_content(course, lesson))
+        vector_search.build_index(all_lessons)
+        results = vector_search.search(query)
+        st.markdown("### 🔍 Top Matches")
+        for r in results:
+            st.write(r.page_content)
+
+elif mode == "🔍 Semantic Q&A":
+    query = st.text_input("Ask a question and get an answer from indexed content")
+    if st.button("Ask"):
+        all_lessons = []
+        for course in course_manager.courses:
+            for lesson in course_manager.get_lessons(course):
+                all_lessons.append(course_manager.get_lesson_content(course, lesson))
+        retrieval_agent.build_index(all_lessons)
+        answer = retrieval_agent.ask(query)
+        st.markdown("### 🧠 Answer")
+        st.write(answer)
