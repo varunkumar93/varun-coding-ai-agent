@@ -18,6 +18,7 @@ from modules.code_generator import generate_code
 from modules.code_assistant import CodeAssistant
 from modules.file_handler import FileHandler
 from modules.groq_agent import GroqAgent
+from modules.course_manager import ProgramizCourseManager
 if "code_generator" not in st.session_state:
     st.session_state.code_generator = lambda spec: generate_code(spec)
 
