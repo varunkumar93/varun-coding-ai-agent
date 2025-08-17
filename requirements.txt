@@ -11,3 +11,4 @@ langchain
 chromadb
 tiktoken
 sentence-transformers
+langchain-community
