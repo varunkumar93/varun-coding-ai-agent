@@ -6,12 +6,21 @@ elif mode == "🧭 Learning Path":
         from modules.course_manager import ProgramizCourseManager
         st.session_state.course_manager = ProgramizCourseManager()
 
+    # Initialize learning path if not already
+    if "learning_path" not in st.session_state:
+        from modules.learning_path import LearningPath
+        st.session_state.learning_path = LearningPath()
+
     # Initialize progress if not already
     if "progress" not in st.session_state:
         st.session_state.progress = {}
 
     # Get next recommended lesson
-    path, lesson = st.session_state.learning_path.recommend(st.session_state.progress)
+    try:
+        path, lesson = st.session_state.learning_path.recommend(st.session_state.progress)
+    except Exception as e:
+        st.error(f"⚠️ Error recommending lesson: {e}")
+        st.stop()
 
     if lesson:
         formatted_topic = lesson.lower().replace(" ", "-")
