@@ -89,17 +89,15 @@ if mode == "🧠 Memory Chat":
         st.markdown("#### 💬 Response")
         st.write(response)
 
-# Mode: Learning Pathfrom modules.learning_path import LearningPath
-elif mode == "🧠 Learning Path":
-    from modules.learning_path import LearningPath
-    from modules.course_manager import ProgramizCourseManager
-    from modules.quiz_engine import QuizEngine
+# Mode: Learning Path
+elif mode == "🧭 Learning Path":
+    st.title("🧭 Personalized Learning Journey")
 
-    learning_path = LearningPath()
+    learning_path = st.session_state.learning_path
     course_manager = ProgramizCourseManager()
-    quiz_engine = QuizEngine()
+    quiz_engine = st.session_state.quiz_engine
 
-    # ✅ FIX: Ensure progress is a set
+    # Ensure progress is a set
     if "progress" not in st.session_state or not isinstance(st.session_state.progress, set):
         st.session_state.progress = set()
 
@@ -113,7 +111,7 @@ elif mode == "🧠 Learning Path":
         lesson_content = course_manager.get_lesson_content(path, lesson)
         st.markdown(lesson_content)
 
-        # ✅ Track progress
+        # Track progress
         st.session_state.progress.add((path, lesson))
 
         # Generate quiz
