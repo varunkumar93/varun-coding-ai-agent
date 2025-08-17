@@ -20,7 +20,6 @@ from modules.file_handler import FileHandler
 from modules.groq_agent import GroqAgent
 if "code_generator" not in st.session_state:
     st.session_state.code_generator = lambda spec: generate_code(spec)
-code = st.session_state.code_generator(spec)
 
 # Dummy course manager (replace with real one later)
 class DummyCourseManager:
