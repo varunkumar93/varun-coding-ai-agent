@@ -14,9 +14,10 @@ from modules.code_runner import CodeRunner
 from modules.prompt_lab import PromptLab
 from modules.quiz_engine import QuizEngine
 from modules.agent_flow import AgentFlow
-from modules.code_generator import CodeGenerator
+from modules.code_generator import generate_code
 from modules.code_assistant import CodeAssistant
 from modules.file_handler import FileHandler
+code = generate_code("Sort a list of integers")
 
 # Dummy course manager (replace with real one later)
 class DummyCourseManager:
