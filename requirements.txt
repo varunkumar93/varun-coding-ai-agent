@@ -11,3 +11,4 @@ requests
 faiss-cpu
 chromadb
 sentence-transformers
+langchain-groq
