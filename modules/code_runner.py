@@ -9,4 +9,4 @@ class CodeRunner:
                 exec(code, {})
             return output.getvalue()
         except Exception as e:
-            return str(e)
+            return f"Error: {str(e)}"
