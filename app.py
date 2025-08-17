@@ -90,38 +90,38 @@ if mode == "🧠 Memory Chat":
         st.write(response)
 
 # Mode: Learning Pathfrom modules.learning_path import LearningPath
-from modules.course_manager import ProgramizCourseManager
-from modules.quiz_engine import QuizEngine
+elif selected_mode == "🧠 Learning Path":
+    from modules.learning_path import LearningPath
+    from modules.course_manager import ProgramizCourseManager
+    from modules.quiz_engine import QuizEngine
 
-learning_path = LearningPath()
-course_manager = ProgramizCourseManager()
-quiz_engine = QuizEngine()
+    learning_path = LearningPath()
+    course_manager = ProgramizCourseManager()
+    quiz_engine = QuizEngine()
 
-# Initialize progress
-if "progress" not in st.session_state:
-    st.session_state.progress = set()
+    # ✅ FIX: Ensure progress is a set
+    if "progress" not in st.session_state or not isinstance(st.session_state.progress, set):
+        st.session_state.progress = set()
 
-# Recommend next lesson
-path, lesson = learning_path.recommend(st.session_state.progress)
+    # Recommend next lesson
+    path, lesson = learning_path.recommend(st.session_state.progress)
 
-if path and lesson:
-    st.subheader(f"📘 {path} → {lesson}")
-    
-    # Fetch and display lesson content
-    content = course_manager.get_lesson_content(path, lesson)
-    st.markdown(content)
+    if path and lesson:
+        st.subheader(f"📘 {path} → {lesson}")
 
-    # Mark lesson as completed
-    st.session_state.progress.add((path, lesson))
+        # Fetch lesson content
+        lesson_content = course_manager.get_lesson_content(path, lesson)
+        st.markdown(lesson_content)
 
-    # Generate and display quiz
-    quiz = quiz_engine.generate(path, lesson)
-    st.markdown("### 🧪 Quiz Time")
-    st.write(quiz)
-else:
-    st.success("🎉 You've completed all lessons!")
-if st.button("🔄 Restart Learning Path"):
-    st.session_state.progress = set()
+        # ✅ Track progress
+        st.session_state.progress.add((path, lesson))
+
+        # Generate quiz
+        quiz = quiz_engine.generate(path, lesson)
+        st.markdown("### 🧪 Quiz Time")
+        st.write(quiz)
+    else:
+        st.success("🎉 You've completed all lessons!")
 # Mode: Run Code
 elif mode == "🧪 Run Code":
     st.title("🧪 Code Execution Sandbox")
