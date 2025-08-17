@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import version_checker
 
 # Load Groq API key from Streamlit secrets
 os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
