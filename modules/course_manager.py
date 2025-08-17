@@ -20,10 +20,9 @@ class ProgramizCourseManager:
             response = requests.get(url)
             soup = BeautifulSoup(response.text, "html.parser")
             content = soup.find("div", class_="content")
-if content:
-    return content.get_text(strip=True)[:2000]
-else:
-    return "⚠️ Lesson content not found on Programiz. Try another topic or check the URL."
-            return content.get_text(strip=True)[:2000]
+            if content:
+                return content.get_text(strip=True)[:2000]
+            else:
+                return "⚠️ Lesson content not found on Programiz. Try another topic or check the URL."
         except Exception as e:
             return f"⚠️ Error fetching lesson: {e}"
