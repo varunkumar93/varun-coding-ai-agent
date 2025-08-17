@@ -8,3 +8,6 @@ Pandas
 requests
 faiss-cpu
 langchain
+chromadb
+tiktoken
+sentence-transformers
