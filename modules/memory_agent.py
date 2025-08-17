@@ -1,6 +1,6 @@
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
-from langchain.llms import OpenAI
+from langchain_community.llms import Groq
 
 class MemoryAgent:
     def __init__(self, model="gpt-3.5-turbo"):
