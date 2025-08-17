@@ -39,12 +39,30 @@ We couldn’t fetch a lesson for **{topic_slug}** right now.
     def get_practice_block(self, topic_slug):
         if topic_slug == "variables-data-types":
             return {
-    "prompt": """...""",
-    "expected_output": "..."
-}
- ""### 🧪 Practice: Variables and Data Types
+                "prompt": """### 🧪 Practice: Variables and Data Types
 
 **Task:** Create a variable `name` with your name and print it.
 
 ```python
 # Your code here
+""", "expected_output": "Varun" }
+elif topic_slug == "java":
+        return {
+            "prompt": """### 🧪 Practice: Java Basics
+Task: Print "Hello, Java!" using System.out.println.
+// Your code here
+""", "expected_output": "Hello, Java!" }
+elif topic_slug == "javascript":
+        return {
+            "prompt": """### 🧪 Practice: JavaScript Basics
+Task: Log "Hello, JS!" to the console.
+// Your code here
+""", "expected_output": "Hello, JS!" }
+    else:
+        return {
+            "prompt": "🧪 Practice block not available for this topic yet.",
+            "expected_output": None
+        }
+
+def evaluate_code(self, user_output, expected_output):
+    return "✅ Correct!" if user_output.strip() == expected_output else "❌ Wrong. Try again."
