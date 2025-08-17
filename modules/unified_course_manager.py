@@ -52,4 +52,12 @@ Agentic AI refers to autonomous systems that plan, reason, and act.
 📘 Try another topic or check spelling.
 📺 YouTube: [Learn {lesson}](https://www.youtube.com/results?search_query=learn+{lesson})
 """
-        return content
+
+        # ✅ Add practice block
+        practice = self.programiz.get_practice_block(topic_slug)
+        return f"{content}\n\n{practice['prompt']}"
+
+    def check_practice(self, lesson, user_output):
+        topic_slug = self.topic_map.get(lesson, lesson.lower().replace(" ", "-"))
+        expected = self.programiz.get_practice_block(topic_slug)["expected_output"]
+        return self.programiz.evaluate_code(user_output, expected)
