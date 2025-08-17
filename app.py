@@ -18,20 +18,11 @@ from modules.code_generator import generate_code
 from modules.code_assistant import CodeAssistant
 from modules.file_handler import FileHandler
 from modules.groq_agent import GroqAgent
-from modules.course_manager import ProgramizCourseManager
-if "code_generator" not in st.session_state:
-    st.session_state.code_generator = lambda spec: generate_code(spec)
-
-# Dummy course manager (replace with real one later)
-class DummyCourseManager:
-    def get_lesson_content(self, path, lesson):
-        return f"### Lesson: {lesson}\nThis is placeholder content for {path} → {lesson}."
-
-course_manager = DummyCourseManager()
+from modules.unified_course_manager import UnifiedCourseManager
 
 # Session state setup
 if "progress" not in st.session_state:
-    st.session_state.progress = {}
+    st.session_state.progress = set()
 
 if "groq_agent" not in st.session_state:
     st.session_state.groq_agent = GroqAgent()
@@ -52,7 +43,7 @@ if "quiz_engine" not in st.session_state:
     st.session_state.quiz_engine = QuizEngine()
 
 if "code_generator" not in st.session_state:
-    st.session_state.code_generator = CodeGenerator()
+    st.session_state.code_generator = lambda spec: generate_code(spec)
 
 if "code_assistant" not in st.session_state:
     st.session_state.code_assistant = CodeAssistant()
@@ -80,6 +71,17 @@ mode = st.sidebar.radio("Choose Mode", [
     "📁 File Handler"
 ])
 
+# Sidebar topic selector for Learning Path
+topic = st.sidebar.selectbox("Select Topic", [
+    "Python", "C", "C++", "Rust", "Java", "Go", "Swift", "C#", "Kotlin",
+    "JavaScript", "TypeScript", "PHP", "Ruby", "R", "Julia", "MATLAB",
+    "Fortran", "COBOL", "Solidity", "VHDL", "Verilog",
+    "HTML", "XML", "Markdown", "LaTeX", "CSS", "SQL", "GraphQL", "JSON", "YAML",
+    "Dockerfile", "Terraform (HCL)", "Regex", "GLSL", "UML",
+    "Gherkin", "JUnit", "TestNG", "PyTest", "Selenium", "Cucumber", "Robot Framework",
+    "Machine Learning", "Agentic AI"
+])
+
 # Mode: Memory Chat
 if mode == "🧠 Memory Chat":
     st.title("🧠 Memory Chat")
@@ -91,35 +93,21 @@ if mode == "🧠 Memory Chat":
 
 # Mode: Learning Path
 elif mode == "🧭 Learning Path":
-    st.title("🧭 Personalized Learning Journey")
+    st.title("🧭 Learn Any Topic")
 
-    learning_path = st.session_state.learning_path
-    course_manager = ProgramizCourseManager()
+    course_manager = UnifiedCourseManager()
     quiz_engine = st.session_state.quiz_engine
 
-    # Ensure progress is a set
-    if "progress" not in st.session_state or not isinstance(st.session_state.progress, set):
-        st.session_state.progress = set()
+    st.subheader(f"📘 {topic} Lesson")
+    lesson_content = course_manager.get_lesson_content("Custom", topic)
+    st.markdown(lesson_content)
 
-    # Recommend next lesson
-    path, lesson = learning_path.recommend(st.session_state.progress)
+    st.session_state.progress.add(topic)
 
-    if path and lesson:
-        st.subheader(f"📘 {path} → {lesson}")
+    quiz = quiz_engine.get_quiz(topic)
+    st.markdown("### 🧪 Quiz Time")
+    st.write(quiz)
 
-        # Fetch lesson content
-        lesson_content = course_manager.get_lesson_content(path, lesson)
-        st.markdown(lesson_content)
-
-        # Track progress
-        st.session_state.progress.add((path, lesson))
-
-        # Generate quiz
-        quiz = quiz_engine.get_quiz(f"{path} → {lesson}")
-        st.markdown("### 🧪 Quiz Time")
-        st.write(quiz)
-    else:
-        st.success("🎉 You've completed all lessons!")
 # Mode: Run Code
 elif mode == "🧪 Run Code":
     st.title("🧪 Code Execution Sandbox")
@@ -141,9 +129,9 @@ elif mode == "🧠 Prompt Lab":
 # Mode: Quiz Engine
 elif mode == "🧠 Quiz Engine":
     st.title("🧠 Quiz Engine")
-    topic = st.text_input("Enter quiz topic")
+    quiz_topic = st.text_input("Enter quiz topic")
     if st.button("Generate Quiz"):
-        quiz = st.session_state.quiz_engine.generate(topic)
+        quiz = st.session_state.quiz_engine.get_quiz(quiz_topic)
         st.markdown("### 📝 Quiz")
         st.write(quiz)
 
@@ -161,7 +149,7 @@ elif mode == "⚙️ Code Generator":
     st.title("⚙️ Code Generator")
     spec = st.text_area("Describe the code you want")
     if st.button("Generate Code"):
-        code = st.session_state.code_generator.generate(spec)
+        code = st.session_state.code_generator(spec)
         st.markdown("### 🧾 Generated Code")
         st.code(code)
 
