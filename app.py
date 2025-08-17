@@ -14,13 +14,10 @@ from modules.code_runner import CodeRunner
 from modules.prompt_lab import PromptLab
 from modules.quiz_engine import QuizEngine
 from modules.agent_flow import AgentFlow
-from modules.code_generator import generate_code
+from modules.code_generator import CodeGenerator
 from modules.code_assistant import CodeAssistant
 from modules.file_handler import FileHandler
-code = generate_code("Sort a list of integers")
 from modules.groq_agent import GroqAgent
-groq_agent = GroqAgent()
-st.session_state.prompt_lab = PromptLab(groq_agent)
 
 # Dummy course manager (replace with real one later)
 class DummyCourseManager:
@@ -33,6 +30,9 @@ course_manager = DummyCourseManager()
 if "progress" not in st.session_state:
     st.session_state.progress = {}
 
+if "groq_agent" not in st.session_state:
+    st.session_state.groq_agent = GroqAgent()
+
 if "memory_agent" not in st.session_state:
     st.session_state.memory_agent = MemoryAgent()
 
@@ -43,19 +43,22 @@ if "code_runner" not in st.session_state:
     st.session_state.code_runner = CodeRunner()
 
 if "prompt_lab" not in st.session_state:
-    st.session_state.prompt_lab = PromptLab()
+    st.session_state.prompt_lab = PromptLab(st.session_state.groq_agent)
 
 if "quiz_engine" not in st.session_state:
     st.session_state.quiz_engine = QuizEngine()
-
-if "agent_flow" not in st.session_state:
-    st.session_state.agent_flow = AgentFlow()
 
 if "code_generator" not in st.session_state:
     st.session_state.code_generator = CodeGenerator()
 
 if "code_assistant" not in st.session_state:
     st.session_state.code_assistant = CodeAssistant()
+
+if "agent_flow" not in st.session_state:
+    st.session_state.agent_flow = AgentFlow(
+        st.session_state.code_assistant,
+        st.session_state.code_generator
+    )
 
 if "file_handler" not in st.session_state:
     st.session_state.file_handler = FileHandler()
