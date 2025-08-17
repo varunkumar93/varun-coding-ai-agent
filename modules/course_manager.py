@@ -39,7 +39,7 @@ We couldn’t fetch a lesson for **{topic_slug}** right now.
     def get_practice_block(self, topic_slug):
         if topic_slug == "variables-data-types":
             return {
-                "prompt": """### 🧪 Practice: Variables and Data Types
+                "prompt": ""### 🧪 Practice: Variables and Data Types
 
 **Task:** Create a variable `name` with your name and print it.
 
