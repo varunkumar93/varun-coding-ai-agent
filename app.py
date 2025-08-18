@@ -70,6 +70,7 @@ mode = st.sidebar.radio("Choose Mode", [
     "Code Assistant",
     "File Handler"
 ])
+st.success(f"✅ Current mode: {mode}")
 
 # Sidebar topic selector for Learning Path
 topic = st.sidebar.selectbox("Select Topic", [
