@@ -27,7 +27,6 @@ if "progress" not in st.session_state:
 if "groq_agent" in st.session_state:
     del st.session_state["groq_agent"]
 st.session_state.groq_agent = GroqAgent()
-
 st.write("✅ GroqAgent has .generate():", hasattr(st.session_state.groq_agent, "generate"))
 
 if "memory_agent" not in st.session_state:
