@@ -5,7 +5,6 @@ from langchain_groq import ChatGroq
 class GroqAgent:
     def __init__(self):
         self.llm = ChatGroq(model="mixtral-8x7b-32768")
-
         self.prompt = PromptTemplate.from_template("Answer this: {input}")
         self.chain = self.prompt | self.llm
 
