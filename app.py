@@ -106,23 +106,35 @@ elif mode == "Learning Path":
             "Gherkin", "JUnit", "TestNG", "PyTest", "Selenium", "Cucumber", "Robot Framework",
             "Machine Learning", "Agentic AI"
         ],
-        index=0  # Default to Python
+        index=0
     )
     st.session_state.selected_topic = topic
 
-    # 🧠 Load lesson and quiz
+    # 🧠 Load lesson
     course_manager = UnifiedCourseManager()
-    quiz_engine = st.session_state.quiz_engine
+    lesson_content = course_manager.get_lesson_content("Custom", topic)
 
     st.subheader(f"📘 {topic} Lesson")
-    lesson_content = course_manager.get_lesson_content("Custom", topic)
     st.markdown(lesson_content)
 
     st.session_state.progress.add(topic)
 
+    # Dynamic Quiz
+    st.markdown("### Quiz Time")
+    quiz_engine = st.session_state.quiz_engine
     quiz = quiz_engine.get_quiz(topic)
-    st.markdown("### 🧪 Quiz Time")
-    st.write(quiz)
+
+    for i, q in enumerate(quiz["questions"]):
+        st.markdown(f"**Q{i+1}: {q['question']}**")
+
+        if q["type"] == "multiple_choice":
+            st.radio(f"Answer {i}", q["options"], key=f"mcq_{i}")
+
+        elif q["type"] == "code":
+            st.text_area(f"Write your code for Q{i+1}", height=200, key=f"code_{i}")
+
+        elif q["type"] == "text":
+            st.text_input(f"Your answer for Q{i+1}", key=f"text_{i}")
 # Mode: Run Code
 elif mode == "Run Code":
     st.title("🧪 Code Execution Sandbox")
