@@ -80,16 +80,6 @@ mode = st.sidebar.radio("Choose Mode", [
 ])
 st.success(f"✅ Current mode: {mode}")
 
-# Sidebar topic selector for Learning Path
-topic = st.sidebar.selectbox("Select Topic", [
-    "Python", "C", "C++", "Rust", "Java", "Go", "Swift", "C#", "Kotlin",
-    "JavaScript", "TypeScript", "PHP", "Ruby", "R", "Julia", "MATLAB",
-    "Fortran", "COBOL", "Solidity", "VHDL", "Verilog",
-    "HTML", "XML", "Markdown", "LaTeX", "CSS", "SQL", "GraphQL", "JSON", "YAML",
-    "Dockerfile", "Terraform (HCL)", "Regex", "GLSL", "UML",
-    "Gherkin", "JUnit", "TestNG", "PyTest", "Selenium", "Cucumber", "Robot Framework",
-    "Machine Learning", "Agentic AI"
-])
 
 # Mode: Memory Chat
 if mode == "Memory Chat":
@@ -103,6 +93,24 @@ if mode == "Memory Chat":
 # Mode: Learning Path
 elif mode == "Learning Path":
     st.title("🧭 Learn Any Topic")
+
+    # 🔽 Topic selector inside Learning Path
+    topic = st.selectbox(
+        "Choose your learning topic:",
+        [
+            "Python", "C", "C++", "Rust", "Java", "Go", "Swift", "C#", "Kotlin",
+            "JavaScript", "TypeScript", "PHP", "Ruby", "R", "Julia", "MATLAB",
+            "Fortran", "COBOL", "Solidity", "VHDL", "Verilog",
+            "HTML", "XML", "Markdown", "LaTeX", "CSS", "SQL", "GraphQL", "JSON", "YAML",
+            "Dockerfile", "Terraform (HCL)", "Regex", "GLSL", "UML",
+            "Gherkin", "JUnit", "TestNG", "PyTest", "Selenium", "Cucumber", "Robot Framework",
+            "Machine Learning", "Agentic AI"
+        ],
+        index=0  # Default to Python
+    )
+    st.session_state.selected_topic = topic
+
+    # 🧠 Load lesson and quiz
     course_manager = UnifiedCourseManager()
     quiz_engine = st.session_state.quiz_engine
 
@@ -115,7 +123,6 @@ elif mode == "Learning Path":
     quiz = quiz_engine.get_quiz(topic)
     st.markdown("### 🧪 Quiz Time")
     st.write(quiz)
-
 # Mode: Run Code
 elif mode == "Run Code":
     st.title("🧪 Code Execution Sandbox")
