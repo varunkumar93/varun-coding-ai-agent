@@ -119,22 +119,32 @@ elif mode == "Learning Path":
 
     st.session_state.progress.add(topic)
 
-    # Dynamic Quiz
-    st.markdown("### Quiz Time")
-    quiz_engine = st.session_state.quiz_engine
-    quiz = quiz_engine.get_quiz(topic)
+    # 🧪 Dynamic Quiz
+st.markdown("### 🧪 Quiz Time")
+quiz_engine = st.session_state.quiz_engine
+quiz = quiz_engine.get_quiz(topic)
 
+if quiz and isinstance(quiz, dict) and "questions" in quiz:
     for i, q in enumerate(quiz["questions"]):
-        st.markdown(f"**Q{i+1}: {q['question']}**")
+        question_text = q.get("question", f"Question {i+1}")
+        question_type = q.get("type", "text")
 
-        if q["type"] == "multiple_choice":
-            st.radio(f"Answer {i}", q["options"], key=f"mcq_{i}")
+        st.markdown(f"**Q{i+1}: {question_text}**")
 
-        elif q["type"] == "code":
+        if question_type == "multiple_choice":
+            options = q.get("options", ["Option A", "Option B"])
+            st.radio(f"Answer {i}", options, key=f"mcq_{i}")
+
+        elif question_type == "code":
             st.text_area(f"Write your code for Q{i+1}", height=200, key=f"code_{i}")
 
-        elif q["type"] == "text":
+        elif question_type == "text":
             st.text_input(f"Your answer for Q{i+1}", key=f"text_{i}")
+
+        else:
+            st.warning(f"⚠️ Unknown question type: `{question_type}`")
+else:
+    st.warning("⚠️ No quiz available for this topic yet. Try another or check your quiz engine.")
 # Mode: Run Code
 elif mode == "Run Code":
     st.title("🧪 Code Execution Sandbox")
