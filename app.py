@@ -17,16 +17,19 @@ from modules.agent_flow import AgentFlow
 from modules.code_generator import generate_code
 from modules.code_assistant import CodeAssistant
 from modules.file_handler import FileHandler
-from modules.groq_agent import GroqAgentV2 as GroqAgent
+from modules.groq_agent import GroqAgent
 from modules.unified_course_manager import UnifiedCourseManager
 
 # Session state setup
 if "progress" not in st.session_state:
     st.session_state.progress = set()
-    
+
+# Force reload of GroqAgent to ensure latest version is used
 if "groq_agent" in st.session_state:
     del st.session_state["groq_agent"]
 st.session_state.groq_agent = GroqAgent()
+
+# Diagnostic check
 st.write("✅ GroqAgent has .generate():", hasattr(st.session_state.groq_agent, "generate"))
 
 if "memory_agent" not in st.session_state:
@@ -97,7 +100,6 @@ if mode == "Memory Chat":
 # Mode: Learning Path
 elif mode == "Learning Path":
     st.title("🧭 Learn Any Topic")
-
     course_manager = UnifiedCourseManager()
     quiz_engine = st.session_state.quiz_engine
 
