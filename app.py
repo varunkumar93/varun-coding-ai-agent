@@ -109,7 +109,6 @@ elif mode == "Learning Path":
         index=0
     )
     st.session_state.selected_topic = topic
-
     # 🧠 Load lesson
     course_manager = UnifiedCourseManager()
     lesson_content = course_manager.get_lesson_content("Custom", topic)
@@ -145,6 +144,7 @@ if quiz and isinstance(quiz, dict) and "questions" in quiz:
             st.warning(f"⚠️ Unknown question type: `{question_type}`")
 else:
     st.warning("⚠️ No quiz available for this topic yet. Try another or check your quiz engine.")
+    
 # Mode: Run Code
 elif mode == "Run Code":
     st.title("🧪 Code Execution Sandbox")
