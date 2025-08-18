@@ -17,7 +17,7 @@ from modules.agent_flow import AgentFlow
 from modules.code_generator import generate_code
 from modules.code_assistant import CodeAssistant
 from modules.file_handler import FileHandler
-from modules.groq_agent import GroqAgent
+from modules.groq_agent import GroqAgentV2 as GroqAgent
 from modules.unified_course_manager import UnifiedCourseManager
 
 # Session state setup
