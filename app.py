@@ -124,7 +124,7 @@ elif mode == "Learning Path":
     quiz_engine = st.session_state.quiz_engine
     quiz = quiz_engine.get_quiz(topic)
     with st.expander("📦 Raw Quiz Data"):
-        st.write(quiz):
+        st.write(quiz)
 
     if quiz and isinstance(quiz, dict) and "questions" in quiz:
         for i, q in enumerate(quiz["questions"]):
