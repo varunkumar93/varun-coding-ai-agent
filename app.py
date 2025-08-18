@@ -23,9 +23,12 @@ from modules.unified_course_manager import UnifiedCourseManager
 # Session state setup
 if "progress" not in st.session_state:
     st.session_state.progress = set()
+    
+if "groq_agent" in st.session_state:
+    del st.session_state["groq_agent"]
+st.session_state.groq_agent = GroqAgent()
 
-if "groq_agent" not in st.session_state:
-    st.session_state.groq_agent = GroqAgent()
+st.write("✅ GroqAgent has .generate():", hasattr(st.session_state.groq_agent, "generate"))
 
 if "memory_agent" not in st.session_state:
     st.session_state.memory_agent = MemoryAgent()
