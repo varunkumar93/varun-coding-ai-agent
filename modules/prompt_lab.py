@@ -8,3 +8,7 @@ class PromptLab:
         elif style == "minimal":
             prompt = f"Give a short answer: {prompt}"
         return self.agent.generate(prompt)
+
+    def run(self, prompt, style="default"):
+        # Unified entry point for agent orchestration
+        return self.run_prompt(prompt, style)
