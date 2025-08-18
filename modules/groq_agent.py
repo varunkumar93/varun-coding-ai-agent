@@ -2,7 +2,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableLambda
 from langchain_groq import ChatGroq
 
-class GroqAgentV2:
+class GroqAgent:
     def __init__(self):
         self.llm = ChatGroq(model="mixtral-8x7b-32768")
         self.prompt = PromptTemplate.from_template("Answer this: {input}")
