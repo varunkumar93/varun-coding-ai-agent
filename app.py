@@ -32,6 +32,9 @@ st.session_state.groq_agent = GroqAgent()
 # Diagnostic check
 st.write("✅ GroqAgent has .generate():", hasattr(st.session_state.groq_agent, "generate"))
 
+if st.session_state.get("debug_mode"):
+    st.write("✅ GroqAgent has .generate():", hasattr(st.session_state.groq_agent, "generate"))
+
 if "memory_agent" not in st.session_state:
     st.session_state.memory_agent = MemoryAgent()
 
