@@ -1,24 +1,15 @@
 # modules/groq_agent.py
 
-import os
-import time
-from groq import Groq, RateLimitError
+from langchain_core.prompts import PromptTemplate
+from langchain_core.runnables import RunnableLambda
+from langchain_groq import ChatGroq
 
 class GroqAgent:
     def __init__(self):
-        self.client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+        self.llm = ChatGroq(model="mixtral-8x7b-32768")
 
-    def query(self, prompt, model="llama3-8b-8192", temperature=0.7, retries=3):
-        for attempt in range(retries):
-            try:
-                response = self.client.chat.completions.create(
-                    model=model,
-                    messages=[{"role": "user", "content": prompt}],
-                    temperature=temperature
-                )
-                return response.choices[0].message.content
-            except RateLimitError:
-                wait_time = 2 * (attempt + 1)
-                print(f"⚠️ Rate limit hit. Retrying in {wait_time}s...")
-                time.sleep(wait_time)
-        return "⚠️ Rate limit exceeded. Please wait and try again later."
+        self.prompt = PromptTemplate.from_template("Answer this: {input}")
+        self.chain = self.prompt | self.llm
+
+    def generate(self, prompt_text):
+        return self.chain.invoke({"input": prompt_text})
