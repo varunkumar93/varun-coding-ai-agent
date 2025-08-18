@@ -58,7 +58,7 @@ if "file_handler" not in st.session_state:
     st.session_state.file_handler = FileHandler()
 
 # Sidebar mode selection
-st.sidebar.title(" Varun coding AI Agent")
+st.sidebar.title("Varun Coding AI Agent")
 mode = st.sidebar.radio("Choose Mode", [
     "Memory Chat",
     "Learning Path",
@@ -84,7 +84,7 @@ topic = st.sidebar.selectbox("Select Topic", [
 ])
 
 # Mode: Memory Chat
-if mode == "🧠 Memory Chat":
+if mode == "Memory Chat":
     st.title("🧠 Memory Chat")
     user_input = st.text_area("Ask your assistant anything")
     if st.button("Send"):
@@ -93,7 +93,7 @@ if mode == "🧠 Memory Chat":
         st.write(response)
 
 # Mode: Learning Path
-elif mode == "🧭 Learning Path":
+elif mode == "Learning Path":
     st.title("🧭 Learn Any Topic")
 
     course_manager = UnifiedCourseManager()
@@ -110,7 +110,7 @@ elif mode == "🧭 Learning Path":
     st.write(quiz)
 
 # Mode: Run Code
-elif mode == "🧪 Run Code":
+elif mode == "Run Code":
     st.title("🧪 Code Execution Sandbox")
     code = st.text_area("Paste Python code below", height=300)
     if st.button("Execute"):
@@ -119,7 +119,7 @@ elif mode == "🧪 Run Code":
         st.code(output)
 
 # Mode: Prompt Lab
-elif mode == "🧠 Prompt Lab":
+elif mode == "Prompt Lab":
     st.title("🧠 Prompt Lab")
     prompt = st.text_area("Enter your custom prompt")
     if st.button("Test Prompt"):
@@ -128,7 +128,7 @@ elif mode == "🧠 Prompt Lab":
         st.write(response)
 
 # Mode: Quiz Engine
-elif mode == "🧠 Quiz Engine":
+elif mode == "Quiz Engine":
     st.title("🧠 Quiz Engine")
     quiz_topic = st.text_input("Enter quiz topic")
     if st.button("Generate Quiz"):
@@ -137,7 +137,7 @@ elif mode == "🧠 Quiz Engine":
         st.write(quiz)
 
 # Mode: Agent Flow
-elif mode == "🔗 Agent Flow":
+elif mode == "Agent Flow":
     st.title("🔗 LangChain Agent Flow")
     query = st.text_area("Enter task for agent")
     if st.button("Run Agent"):
@@ -146,7 +146,7 @@ elif mode == "🔗 Agent Flow":
         st.write(result)
 
 # Mode: Code Generator
-elif mode == "⚙️ Code Generator":
+elif mode == "Code Generator":
     st.title("⚙️ Code Generator")
     spec = st.text_area("Describe the code you want")
     if st.button("Generate Code"):
@@ -155,7 +155,7 @@ elif mode == "⚙️ Code Generator":
         st.code(code)
 
 # Mode: Code Assistant
-elif mode == "🛠️ Code Assistant":
+elif mode == "Code Assistant":
     st.title("🛠️ Code Assistant")
     code_input = st.text_area("Paste code for explanation or debugging", height=300)
     if st.button("Assist"):
@@ -164,7 +164,7 @@ elif mode == "🛠️ Code Assistant":
         st.write(result)
 
 # Mode: File Handler
-elif mode == "📁 File Handler":
+elif mode == "File Handler":
     st.title("📁 File Handler")
     uploaded_file = st.file_uploader("Upload a file")
     if uploaded_file:
